@@ -5,19 +5,19 @@ import Axios from 'axios';
 const Home = () => {
 
     const [data, setData] = useState([]);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(1);
 
     useEffect(()=>{
         getDataApi();
     },[limit]);
     
     const getDataApi = () => {
-        console.log("limit", limit)
-        Axios.get(`https://api.slingacademy.com/v1/sample-data/photos?offset=5&limit=${limit}`,
+      
+        Axios.get(`https://api.slingacademy.com/v1/sample-data/photos?offset=${limit}&limit=10`,
         { 'headers': { 'Content-Type': 'application/json' } }
         )
         .then((res)=>{
-            setData(res?.data?.photos);
+            setData([...data, ...res?.data?.photos]);
         })
         .catch((error)=>{
             console.log("error", error);
@@ -27,8 +27,7 @@ const Home = () => {
     const handleScroll = (e) => {
         const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
         if (bottom) { 
-            console.log("bottom")
-            setLimit(limit+10);
+            setLimit(limit+1);
         }
      }
 
