@@ -37,7 +37,7 @@ const Home = () => {
         <div class='flex flex-wrap justify-around overflow-y-scroll h-full'
         style={{overflowY: 'scroll', maxHeight: '500px'}}
         onScroll={handleScroll}  >
-        {data && data.map((obj)=>{
+        {data && data.map((obj, id)=>{
             return (        
                         <Card
                             imgUrl={obj?.url}
@@ -45,6 +45,7 @@ const Home = () => {
                             price={75000}
                             discount={10}
                             name={'abc'}
+                            key={id}
                         />
             );
         })}
