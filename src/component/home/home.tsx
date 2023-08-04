@@ -50,7 +50,7 @@ const Home = () => {
     return(
         <>
         <div class='text-center font-bold text-lg pt-5 pb-5'>Books</div>
-        <div class='flex flex-wrap justify-around h-full'
+        <div class='flex flex-wrap justify-center items-center h-full gap-3'
          >
         {data && data.map((obj, id)=>{
             return (        
