@@ -5,38 +5,49 @@ import Axios from 'axios';
 const Home = () => {
 
     const [data, setData] = useState([]);
-    const [limit, setLimit] = useState(1);
+    const [offset, setOffSet] = useState(1);
+
+    useEffect(()=>{
+        window.addEventListener("scroll", handleInfiniteScroll);
+        return() =>{
+            window.removeEventListener("scroll",handleInfiniteScroll);
+        }
+    },[]);
 
     useEffect(()=>{
         getDataApi();
-    },[limit]);
+    },[offset]);
     
+    const handleInfiniteScroll = async() => {
+        try{
+            if(window.innerHeight + document.documentElement.scrollTop + 1 > 
+                document.documentElement.scrollHeight){
+                    setOffSet((prev)=> prev+1);
+                }
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
     const getDataApi = () => {
       
-        Axios.get(`https://api.slingacademy.com/v1/sample-data/photos?offset=${limit}&limit=10`,
+        Axios.get(`https://api.slingacademy.com/v1/sample-data/photos?offset=${offset}&limit=10`,
         { 'headers': { 'Content-Type': 'application/json' } }
         )
         .then((res)=>{
-            setData([...data, ...res?.data?.photos]);
+            setData((prev) => [...prev, ...res?.data?.photos]);
         })
         .catch((error)=>{
             console.log("error", error);
         });
     }
 
-    const handleScroll = (e) => {
-        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-        if (bottom) { 
-            setLimit(limit+1);
-        }
-     }
-
     return(
         <>
         <div class='text-center font-bold text-lg pt-5 pb-5'>Books</div>
-        <div class='flex flex-wrap justify-around overflow-y-scroll h-full'
-        style={{overflowY: 'scroll', maxHeight: '500px'}}
-        onScroll={handleScroll}  >
+        <div class='flex flex-wrap justify-around h-full'
+         >
         {data && data.map((obj, id)=>{
             return (        
                         <Card
