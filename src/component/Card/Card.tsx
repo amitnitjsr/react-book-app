@@ -11,7 +11,7 @@ const Card = (props: CardProps) => {
     
     return(
         <div class='shadow-md mb-4'>
-            <div class='w-48 h-64 object-contain'>
+            <div class='w-48 h-60 object-contain'>
                 <img src={props?.imgUrl} alt='not found' class="rounded"/>
             <div class='font-semibold pl-1 pr-1'>
                 {props.description}

@@ -35,7 +35,7 @@ const Home = () => {
     return(
         <>
         <div class='text-center font-bold text-lg pt-5 pb-5'>Books</div>
-        <div class='flex flex-wrap justify-evenly overflow-y-scroll h-full'
+        <div class='flex flex-wrap justify-around overflow-y-scroll h-full'
         style={{overflowY: 'scroll', maxHeight: '500px'}}
         onScroll={handleScroll}  >
         {data && data.map((obj)=>{
