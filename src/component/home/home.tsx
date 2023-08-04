@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import Axios from 'axios';
+import Loading from './Loading';
 
 const Home = () => {
 
     const [data, setData] = useState([]);
     const [offset, setOffSet] = useState(1);
+    const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
         window.addEventListener("scroll", handleInfiniteScroll);
@@ -22,7 +24,8 @@ const Home = () => {
         try{
             if(window.innerHeight + document.documentElement.scrollTop + 1 > 
                 document.documentElement.scrollHeight){
-                    setOffSet((prev)=> prev+1);
+                    setLoading(true);
+                    setOffSet((prev)=> prev + 1);
                 }
         }
         catch(error){
@@ -37,6 +40,7 @@ const Home = () => {
         )
         .then((res)=>{
             setData((prev) => [...prev, ...res?.data?.photos]);
+            setLoading(false);
         })
         .catch((error)=>{
             console.log("error", error);
@@ -61,6 +65,7 @@ const Home = () => {
             );
         })}
         </div>
+        {loading && <Loading />}
         </>
     )
 }
